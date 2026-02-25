@@ -60,3 +60,6 @@ def history():
 def clear_history():
     attack_history.clear()
     return {"message": "History cleared"}
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run(app, host="0.0.0.0", port=10000)
