@@ -20,6 +20,9 @@ ChartJS.register(
   Legend
 );
 
+/* 🔥 LIVE BACKEND URL */
+const API_BASE = "https://nexsolve-quantumshield.onrender.com";
+
 /* ---------------- LANDING ---------------- */
 
 function Landing() {
@@ -47,15 +50,19 @@ function Dashboard() {
   const [autoMode, setAutoMode] = useState(false);
 
   const simulateAttack = async () => {
-    const res = await fetch("http://localhost:8000/simulate");
-    const data = await res.json();
+    try {
+      const res = await fetch(`${API_BASE}/simulate`);
+      const data = await res.json();
 
-    setErrorRate(data.error_rate);
-    setThreatLevel(data.threat_level);
-    setAiStatus(data.ai_status);
-    setConfidence(Math.floor(Math.random() * 20) + 80);
+      setErrorRate(data.error_rate);
+      setThreatLevel(data.threat_level);
+      setAiStatus(data.ai_status);
+      setConfidence(Math.floor(Math.random() * 20) + 80);
 
-    setDataPoints((prev) => [...prev.slice(-9), data.error_rate]);
+      setDataPoints((prev) => [...prev.slice(-9), data.error_rate]);
+    } catch (error) {
+      console.error("Backend connection error:", error);
+    }
   };
 
   useEffect(() => {
